@@ -128,5 +128,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# Other
 *.vscode
 not-requirements.txt
+output/*
+project/dicts/jap_dict.json
+project/dicts/word_dict.json
