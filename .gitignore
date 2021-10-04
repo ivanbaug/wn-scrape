@@ -134,3 +134,4 @@ not-requirements.txt
 output/*
 project/dicts/jap_dict.json
 project/dicts/word_dict.json
+wn_jp_html/*

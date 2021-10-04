@@ -22,6 +22,7 @@ def get_page_txt(site_url):
     try:
         response = requests.get(site_url, headers=headers)
         response.raise_for_status()
+        # print(f"statuscode:{response.status_code}")
         return response.text
     except requests.exceptions.ConnectionError:
         wrong_links.append(site_url)
@@ -61,7 +62,7 @@ def save_ch_txt(ch_num: int):
             else:
                 myfile.write(paragraph.text + "\n")
             paragraph_id += 1
-        # Write paragraphs
+        # Write afterwords
         keep_trying = 3
         afterword_id = 1
         myfile.write("----------\n")
@@ -74,11 +75,35 @@ def save_ch_txt(ch_num: int):
             afterword_id += 1
 
 
-save_ch_txt(1)
+def save_ch_html(ch_num: int):
+    # get entire page
+    site_url = f"{main_url}{ch_num}"
+    wn_webpage = get_page_txt(site_url)
+    # soup = BeautifulSoup(wn_webpage, "html.parser")
+
+    # # get chapter data
+    # ch_title = soup.find("p", class_="novel_subtitle")
+    # novel_honbun = soup.find(id="novel_honbun")
+    # novel_afterword = soup.find(id="novel_a")
+
+    with open(
+        f"wn_jp_html/CH{ch_num:03d}-{dt.now().strftime('%Y%m%d-%H%M%S')}.html",
+        "w",
+        encoding="utf8",
+    ) as myfile:
+        # Write title
+        myfile.write(wn_webpage)
 
 
+# save_ch_txt(1)
+for i in range(1, 678):
+    save_ch_html(i)
+# get entire page
+# site_url = f"{main_url}5"
+# print(site_url)
+# wn_webpage = get_page_txt(site_url)
 # soup = BeautifulSoup(wn_webpage, "html.parser")
-# test_line = soup.find(id="L0")
+# test_line = soup.find(id="L1")
 # print(test_line)
 # print(test_line == None)
 # print(test_line.text)
