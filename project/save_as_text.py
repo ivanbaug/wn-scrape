@@ -53,11 +53,8 @@ def save_ch_txt(ch_num: int):
             afterword_id += 1
 
 
-# site_url = f"{main_url}5"
-# print(site_url)
-# wn_webpage = get_page_txt(site_url)
-# soup = BeautifulSoup(wn_webpage, "html.parser")
-# test_line = soup.find(id="L1")
-# print(test_line)
-# print(test_line == None)
-# print(test_line.text)
+if __name__ == "__main__":
+    # Save raw chapters
+    # for i in range(1, 678):
+    for i in range(1, 3):
+        save_ch_txt(i)
