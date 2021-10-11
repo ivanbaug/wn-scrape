@@ -11,26 +11,42 @@ main_url = os.getenv("SITE_URL")
 print(main_url)
 
 
-def save_ch_txt(ch_num: int):
-    # get entire page
-    site_url = f"{main_url}{ch_num}"
-    wn_webpage = get_page_txt(site_url)
-    soup = BeautifulSoup(wn_webpage, "html.parser")
+# Get list of all files in the raws dir
+raws_dir = "wn_jp_html/"
+f = []
+for (dirpath, dirnames, filenames) in os.walk(raws_dir):
+    f.extend(filenames)
+    break
 
-    # get chapter data
-    ch_title = soup.find("p", class_="novel_subtitle")
-    novel_honbun = soup.find(id="novel_honbun")
-    novel_afterword = soup.find(id="novel_a")
+# open a file and turn it into soup
+with open(f"{raws_dir}{f[1]}", encoding="utf8") as fp:
+    print(f[1])
+    soup = BeautifulSoup(fp.read(), features="lxml")
+    # soup = BeautifulSoup(fp, 'html.parser')
+ch_title = soup.find("p", class_="novel_subtitle")
+print(ch_title)
 
-    with open(
-        f"output/CH{ch_num:03d}-{dt.now().strftime('%Y%m%d-%H%M%S')}.txt",
-        "w",
-        encoding="utf8",
-    ) as myfile:
-        # Write title
-        myfile.write(f"CHAPTER {ch_num}: {ch_title.text}\n")
 
-        # Write paragraphs
+with open(
+    f"output/BIGCHUNGUS-JP-{dt.now().strftime('%Y%m%d-%H%M%S')}.txt",
+    "w",
+    encoding="utf8",
+) as myfile:
+    # file_name = f[0]
+    for file_name in f[:4]:
+        # Load raw file
+        with open(f"{raws_dir}{file_name}", encoding="utf8") as fp:
+            soup = BeautifulSoup(fp.read(), features="lxml")
+
+        # Get chapter data
+        ch_title = soup.find("p", class_="novel_subtitle")
+        novel_honbun = soup.find(id="novel_honbun")
+        novel_afterword = soup.find(id="novel_a")
+
+        # Write chapter title to file
+        myfile.write(f"{file_name.split('-')[0]}: {ch_title.text}\n")
+
+        # Write chapter content to file
         keep_trying = 3
         paragraph_id = 1
         while keep_trying:
@@ -40,6 +56,7 @@ def save_ch_txt(ch_num: int):
             else:
                 myfile.write(paragraph.text + "\n")
             paragraph_id += 1
+
         # Write afterwords
         keep_trying = 3
         afterword_id = 1
@@ -51,8 +68,7 @@ def save_ch_txt(ch_num: int):
             else:
                 myfile.write(aw.text + "\n")
             afterword_id += 1
-
-
+        myfile.write("\n\n")
 # site_url = f"{main_url}5"
 # print(site_url)
 # wn_webpage = get_page_txt(site_url)
