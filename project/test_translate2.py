@@ -132,10 +132,10 @@ with open(
     encoding="utf8",
 ) as myfile:
     # Write html headers
-    myfile.write(file_top("Booklet 1"))
+    myfile.write(file_top("Booklet 5.6"))
     # Iterate over desired chapters (temember lists start in 0)
-    myef = [f[559]]
-    for file_name in myef:
+    # myef = [f[557]]
+    for file_name in f[557:578]:  # ch 558 to 578
         # Load raw file
         print(file_name)
         with open(f"{raws_dir}{file_name}", encoding="utf8") as fp:
@@ -155,8 +155,10 @@ with open(
         myfile.write(make_title(title))
 
         # Write chapter content to file
-        par_list = paragraphs_to_list(novel_honbun)
-        en_list = translate_list(par_list)
+        par_list = paragraphs_to_list(novel_honbun, "L")
+        print(f"WN Sentences to translate: {len(par_list)}")
+        if par_list:
+            en_list = translate_list(par_list)
 
         for sentence in en_list:
             myfile.write(make_paragraph(sentence))
@@ -178,8 +180,10 @@ with open(
 
         # Write afterwords
         myfile.write(make_afterword(file_name.split("-")[0]))
-        par_list = paragraphs_to_list(novel_afterword)
-        en_list = translate_list(par_list)
+        par_list = paragraphs_to_list(novel_afterword, "La")
+        print(f"Afterword Sentences to translate: {len(par_list)}")
+        if par_list:
+            en_list = translate_list(par_list)
 
         for sentence in en_list:
             myfile.write(make_paragraph(sentence))

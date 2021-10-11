@@ -2,13 +2,8 @@ import os
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from datetime import datetime as dt
-from shared_funcs import get_page_txt
 
 out_folder = "output/"
-
-load_dotenv()
-main_url = os.getenv("SITE_URL")
-print(main_url)
 
 
 # Get list of all files in the raws dir
