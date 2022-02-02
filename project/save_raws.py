@@ -4,10 +4,6 @@ from datetime import datetime as dt
 from shared_funcs import get_page_txt
 
 load_dotenv()
-main_url = os.getenv("SITE_URL")
-print(main_url)
-
-out_folder = "wn_jp_html/"
 
 
 def save_ch_html(ch_num: int):
@@ -26,6 +22,11 @@ def save_ch_html(ch_num: int):
 
 if __name__ == "__main__":
     # Save raw chapters
-    for i in range(1, 678):
+    main_url = os.getenv("SITE_URL")
+    out_folder = "wn_jp_html/"
+    ch_start = 1
+    ch_end = 128
+
+    for i in range(ch_start, ch_end):
         # for i in range(1, 3):
         save_ch_html(i)

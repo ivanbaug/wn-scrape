@@ -13,7 +13,7 @@ def validate_payload(payload):
     @param payload: text to translate
     @return: bool
     """
-    # check if is string, is not empry string or contains only numbers
+    # check if is string, is not empty string or contains only numbers
     if (
         not payload
         or not isinstance(payload, str)
@@ -175,4 +175,8 @@ def translate_multiple_ch(bk_name: str, ch_start=1, ch_end=2, raws_dir="wn_jp_ht
 if __name__ == "__main__":
     # Run translation - html crsation function
     # The resulting html is compatible with Calibre ebook indentation
-    translate_multiple_ch("Booklet 5.8", ch_start=598, ch_end=600)
+    book_title = "Booklet 5.12"
+
+    translate_multiple_ch(book_title, ch_start=42, ch_end=52)
+    # 5.11 649-665
+    # 5.12 666-677
